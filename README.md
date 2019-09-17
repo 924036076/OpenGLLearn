@@ -1,2 +1,2 @@
-# Shader
-着色器学习
+# OpenGL
+OpenGL学习
