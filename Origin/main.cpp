@@ -1,6 +1,8 @@
 #include <windows.h>
 #include <gl/GL.h>
 #include <gl/GLU.h>
+#include "texture.h"
+#include "utils.h"
 
 #pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"glu32.lib")
@@ -64,6 +66,11 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	gluPerspective(50.0f, 800.0f / 600.0f, 0.1f, 1000.0f);//set some values to projection matrix
 	glMatrixMode(GL_MODELVIEW); //tell ... model view matrix
 	glLoadIdentity();
+
+	char* str = (char*)LoadFileContent("test.txt");
+	printf("%s\n", str);
+	//Texture texture;
+	//texture.Init("test.bmp");//init OpenGL texture
 
 	glClearColor(0.1f, 0.4f, 0.6f, 1.0f); //set clear color for background
 	//show window
