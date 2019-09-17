@@ -1,4 +1,9 @@
 #include <windows.h>
+#include <gl/GL.h>
+#include <gl/GLU.h>
+
+#pragma comment(lib,"opengl32.lib")
+#pragma comment(lib,"glu32.lib")
 
 LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	switch (msg)
@@ -17,7 +22,7 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	wndclass.cbSize = sizeof(WNDCLASSEX);
 	wndclass.cbWndExtra = 0;
 	wndclass.hbrBackground = NULL;
-	wndclass.hCursor = NULL;
+	wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wndclass.hIcon = NULL;
 	wndclass.hIconSm = NULL;
 	wndclass.hInstance = hInstance;
@@ -33,7 +38,29 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	}
 
 	//create window
-	HWND hwnd = CreateWindowEx(NULL, "GLWindow", "OpneGL", WS_OVERLAPPEDWINDOW, 100, 100, 800, 600, NULL, NULL, hInstance, NULL);
+	HWND hwnd = CreateWindowEx(NULL, "GLWindow", "OpneGL Window", WS_OVERLAPPEDWINDOW, 100, 100, 800, 600, NULL, NULL, hInstance, NULL);
+
+	//create OpenGL render context
+	HDC dc = GetDC(hwnd);
+	PIXELFORMATDESCRIPTOR pfd;
+	memset(&pfd, 0, sizeof(PIXELFORMATDESCRIPTOR));
+	pfd.nVersion = 1;
+	pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
+	pfd.cColorBits = 32;
+	pfd.cDepthBits = 24;
+	pfd.cStencilBits = 8;
+	pfd.iPixelType = PFD_TYPE_RGBA;
+	pfd.iLayerType = PFD_MAIN_PLANE;
+	pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
+
+	int pixexFormat = ChoosePixelFormat(dc, &pfd);
+	SetPixelFormat(dc, pixexFormat, &pfd);
+
+	HGLRC rc = wglCreateContext(dc);
+	wglMakeCurrent(dc, rc); // setup OpenGL context complete
+
+	//OpenGL init
+	glClearColor(0.1, 0.4, 0.6, 1.0); //set clear color for backgroud
 
 	//show window
 	ShowWindow(hwnd, SW_SHOW);
@@ -54,6 +81,10 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			DispatchMessage(&msg);
 		}
 		//draw scene
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		//present scene
+		SwapBuffers(dc);	//½»»»»º³åÇø
 	}
 	return 0;
 }
