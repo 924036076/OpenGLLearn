@@ -87,9 +87,10 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			DispatchMessage(&msg);
 		}
 		//draw scene
-		glLoadIdentity();
+		//glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		glPushMatrix();
 		glScalef(2.0f, 2.0f, 1.0f);
 		//rotate must early than translate
 		glRotatef(30.0f, 0.0f, 0.0f, 1.0f);
@@ -104,6 +105,7 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		glVertex3f(1.0f, -1.0f, -5.0f);
 
 		glEnd();
+		glPopMatrix();
 
 		//present scene
 		SwapBuffers(dc);	//½»»»»º³åÇø
