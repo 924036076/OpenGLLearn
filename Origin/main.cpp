@@ -69,7 +69,26 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	//show window
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd);
-	//glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
+
+	//init light
+	float blackColor[] = { 0.0f,0.0f,0.0f,1.0f };
+	float whiteColor[] = { 1.0f,1.0f,1.0f,1.0f };
+	float lightPos[] = { 0.0f,1.0f,0.0f,0.0f };//direction light
+	glLightfv(GL_LIGHT0, GL_AMBIENT, whiteColor);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteColor);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, whiteColor);
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+
+	float blackMat[] = { 0.0f,0.0f,0.0f,1.0f };
+	float ambientMat[] = { 0.1f,0.1f,0.1f,1.0f };
+	float diffuseMat[] = { 0.4f,0.4f,0.4f,1.0f };
+	float specularMat[] = { 0.9f,0.9f,0.9f,1.0f };
+	glMaterialfv(GL_FRONT, GL_AMBIENT, ambientMat);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuseMat);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, specularMat);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 
 	//front face: ccw -> counter clock wind
 	MSG msg;
@@ -87,26 +106,17 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			DispatchMessage(&msg);
 		}
 		//draw scene
-		//glLoadIdentity();
+		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		glPushMatrix();
-		glScalef(2.0f, 2.0f, 1.0f);
-		//rotate must early than translate
-		glRotatef(30.0f, 0.0f, 0.0f, 1.0f);
-		glTranslatef(1.0f, -1.0f, 0.0f);
 		glBegin(GL_TRIANGLES);	//start to draw something
-
-		glColor4ub(255, 0, 0, 255);
-		glVertex3f(0.0f, 1.0f, -5.0f);
-		glColor4ub(0, 255, 0, 255);
-		glVertex3f(-1.0f, -1.0f, -5.0f);
-		glColor4ub(0, 0, 255, 255);
-		glVertex3f(1.0f, -1.0f, -5.0f);
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(-1.0f, -0.5f, -2.0f);
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(1.0f, -0.5f, -2.0f);
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(0.0f, -0.5f, -10.0f);
 
 		glEnd();
-		glPopMatrix();
-
 		//present scene
 		SwapBuffers(dc);	//½»»»»º³åÇø
 	}
