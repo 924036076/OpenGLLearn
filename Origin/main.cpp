@@ -60,16 +60,18 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	wglMakeCurrent(dc, rc); // setup OpenGL context complete
 
 	//OpenGL init
-	glMatrixMode(GL_PROJECTION); //tell the GPU process that I would select the projection matrix GPU处理器
+	glMatrixMode(GL_PROJECTION); //tell the GPU processer that I would select the projection matrix GPU处理器
 	gluPerspective(50.0f, 800.0f / 600.0f, 0.1f, 1000.0f);//set some values to projection matrix
 	glMatrixMode(GL_MODELVIEW); //tell ... model view matrix
 	glLoadIdentity();
 
-	glClearColor(0.1, 0.4, 0.6, 1.0); //set clear color for background
+	glClearColor(0.1f, 0.4f, 0.6f, 1.0f); //set clear color for background
 	//show window
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd);
+	//glEnable(GL_CULL_FACE);
 
+	//front face: ccw -> counter clock wind
 	MSG msg;
 	while (true)
 	{
@@ -86,16 +88,23 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 		//draw scene
 		glClear(GL_COLOR_BUFFER_BIT);
-		//glColor4ub(255, 255, 255, 255);	//set current color: white
 
-		glLineWidth(3.0f);
-		glBegin(GL_LINE_LOOP);	//start to draw something
+		glBegin(GL_TRIANGLES);	//start to draw something
+
 		glColor4ub(255, 0, 0, 255);
-		glVertex3f(0.0f, 0.0f, -10.5f);
+		glVertex3f(0.0f, 1.0f, -5.0f);
 		glColor4ub(0, 255, 0, 255);
-		glVertex3f(-5.0f, 0.0f, -10.5f);
+		glVertex3f(-1.0f, -1.0f, -5.0f);
 		glColor4ub(0, 0, 255, 255);
-		glVertex3f(5.0f, 0.0f, -10.5f);
+		glVertex3f(1.0f, -1.0f, -5.0f);
+
+		glColor4ub(255, 0, 0, 255);
+		glVertex3f(1.0f, 1.0f, -5.0f);
+		glColor4ub(0, 255, 0, 255);
+		glVertex3f(0.0f, -1.0f, -5.0f);
+		glColor4ub(0, 0, 255, 255);
+		glVertex3f(2.0f, -1.0f, -5.0f);
+
 		glEnd();
 
 		//present scene
