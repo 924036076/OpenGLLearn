@@ -1,3 +1,2 @@
 ﻿  main.cpp
-E:\OpenGLProject\Origin\main.cpp(68,33): warning C4305:  “参数”: 从“double”到“GLclampf”截断
   Origin.vcxproj -> E:\OpenGLProject\Origin\x64\Debug\Origin.exe

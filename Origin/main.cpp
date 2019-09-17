@@ -60,7 +60,7 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	wglMakeCurrent(dc, rc); // setup OpenGL context complete
 
 	//OpenGL init
-	glMatrixMode(GL_PROJECTION); //tell the GPU processer that I would select the projection matrix GPU处理器
+	glMatrixMode(GL_PROJECTION); //tell the GPU processor that I would select the projection matrix GPU处理器
 	gluPerspective(50.0f, 800.0f / 600.0f, 0.1f, 1000.0f);//set some values to projection matrix
 	glMatrixMode(GL_MODELVIEW); //tell ... model view matrix
 	glLoadIdentity();
@@ -87,8 +87,13 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			DispatchMessage(&msg);
 		}
 		//draw scene
+		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		glScalef(2.0f, 2.0f, 1.0f);
+		//rotate must early than translate
+		glRotatef(30.0f, 0.0f, 0.0f, 1.0f);
+		glTranslatef(1.0f, -1.0f, 0.0f);
 		glBegin(GL_TRIANGLES);	//start to draw something
 
 		glColor4ub(255, 0, 0, 255);
@@ -97,13 +102,6 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		glVertex3f(-1.0f, -1.0f, -5.0f);
 		glColor4ub(0, 0, 255, 255);
 		glVertex3f(1.0f, -1.0f, -5.0f);
-
-		glColor4ub(255, 0, 0, 255);
-		glVertex3f(1.0f, 1.0f, -5.0f);
-		glColor4ub(0, 255, 0, 255);
-		glVertex3f(0.0f, -1.0f, -5.0f);
-		glColor4ub(0, 0, 255, 255);
-		glVertex3f(2.0f, -1.0f, -5.0f);
 
 		glEnd();
 
