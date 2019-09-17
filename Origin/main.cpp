@@ -86,11 +86,16 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 		//draw scene
 		glClear(GL_COLOR_BUFFER_BIT);
-		glColor4ub(255, 255, 255, 255);	//set current color: white
+		//glColor4ub(255, 255, 255, 255);	//set current color: white
 
-		glPointSize(20.0f);
-		glBegin(GL_POINTS);	//start to draw something
-		glVertex3f(0.0f, 0.0f, -0.5f);
+		glLineWidth(3.0f);
+		glBegin(GL_LINE_LOOP);	//start to draw something
+		glColor4ub(255, 0, 0, 255);
+		glVertex3f(0.0f, 0.0f, -10.5f);
+		glColor4ub(0, 255, 0, 255);
+		glVertex3f(-5.0f, 0.0f, -10.5f);
+		glColor4ub(0, 0, 255, 255);
+		glVertex3f(5.0f, 0.0f, -10.5f);
 		glEnd();
 
 		//present scene
