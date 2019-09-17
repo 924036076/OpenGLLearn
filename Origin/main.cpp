@@ -60,8 +60,12 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	wglMakeCurrent(dc, rc); // setup OpenGL context complete
 
 	//OpenGL init
-	glClearColor(0.1, 0.4, 0.6, 1.0); //set clear color for backgroud
+	glMatrixMode(GL_PROJECTION); //tell the GPU process that I would select the projection matrix GPU处理器
+	gluPerspective(50.0f, 800.0f / 600.0f, 0.1f, 1000.0f);//set some values to projection matrix
+	glMatrixMode(GL_MODELVIEW); //tell ... model view matrix
+	glLoadIdentity();
 
+	glClearColor(0.1, 0.4, 0.6, 1.0); //set clear color for background
 	//show window
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd);
@@ -82,6 +86,12 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 		//draw scene
 		glClear(GL_COLOR_BUFFER_BIT);
+		glColor4ub(255, 255, 255, 255);	//set current color: white
+
+		glPointSize(20.0f);
+		glBegin(GL_POINTS);	//start to draw something
+		glVertex3f(0.0f, 0.0f, -0.5f);
+		glEnd();
 
 		//present scene
 		SwapBuffers(dc);	//交换缓冲区
