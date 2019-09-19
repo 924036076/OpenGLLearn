@@ -67,10 +67,10 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	glMatrixMode(GL_MODELVIEW); //tell ... model view matrix
 	glLoadIdentity();
 
-	char* str = (char*)LoadFileContent("test.txt");
-	printf("%s\n", str);
-	//Texture texture;
-	//texture.Init("test.bmp");//init OpenGL texture
+	//char* str = (char*)LoadFileContent("test.txt");
+	//printf("%s\n", str);
+	Texture texture;
+	texture.Init("Greeting.bmp");//init OpenGL texture
 
 	glClearColor(0.1f, 0.4f, 0.6f, 1.0f); //set clear color for background
 	//show window
@@ -115,12 +115,20 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//draw scene
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT);
+		glEnable(GL_TEXTURE_2D);
+
+		glBindTexture(GL_TEXTURE_2D, texture.mTextureID);
 		glBegin(GL_TRIANGLES);	//start to draw something
 		glNormal3f(0.0f, 1.0f, 0.0f);
+		glTexCoord2f(0.0f, 0.0f);
 		glVertex3f(-1.0f, -0.5f, -2.0f);
+		
 		glNormal3f(0.0f, 1.0f, 0.0f);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(1.0f, -0.5f, -2.0f);
+
 		glNormal3f(0.0f, 1.0f, 0.0f);
+		glTexCoord2f(0.5f, 1.0f);
 		glVertex3f(0.0f, -0.5f, -10.0f);
 
 		glEnd();

@@ -1,7 +1,5 @@
 ﻿  main.cpp
-  texture.cpp
-  utils.cpp
-  正在生成代码...
+  LINK : 没有找到 E:\OpenGLProject\Origin\x64\Debug\Origin.exe 或上一个增量链接没有生成它；正在执行完全链接
   Origin.vcxproj -> E:\OpenGLProject\Origin\x64\Debug\Origin.exe
   Microsoft (R) COFF/PE Editor Version 14.21.27702.2
   Copyright (C) Microsoft Corporation.  All rights reserved.
