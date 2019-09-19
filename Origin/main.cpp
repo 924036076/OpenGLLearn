@@ -3,6 +3,7 @@
 #include <gl/GLU.h>
 #include "texture.h"
 #include "utils.h"
+#include "objmodel.h"
 
 #pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"glu32.lib")
@@ -67,10 +68,10 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	glMatrixMode(GL_MODELVIEW); //tell ... model view matrix
 	glLoadIdentity();
 
-	//char* str = (char*)LoadFileContent("test.txt");
-	//printf("%s\n", str);
 	Texture texture;
-	texture.Init("Greeting.bmp");//init OpenGL texture
+	texture.Init("res/Greeting.bmp");//init OpenGL texture
+	ObjModel model;
+	model.Init("res/Cube.obj");
 
 	glClearColor(0.1f, 0.4f, 0.6f, 1.0f); //set clear color for background
 	//show window
@@ -94,8 +95,8 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	glMaterialfv(GL_FRONT, GL_AMBIENT, ambientMat);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuseMat);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, specularMat);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHT0);
 
 	//front face: ccw -> counter clock wind
 	MSG msg;
@@ -115,23 +116,7 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//draw scene
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT);
-		glEnable(GL_TEXTURE_2D);
-
-		glBindTexture(GL_TEXTURE_2D, texture.mTextureID);
-		glBegin(GL_TRIANGLES);	//start to draw something
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex3f(-1.0f, -0.5f, -2.0f);
-		
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glTexCoord2f(1.0f, 0.0f);
-		glVertex3f(1.0f, -0.5f, -2.0f);
-
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glTexCoord2f(0.5f, 1.0f);
-		glVertex3f(0.0f, -0.5f, -10.0f);
-
-		glEnd();
+		model.Draw();
 		//present scene
 		SwapBuffers(dc);	//½»»»»º³åÇø
 	}
